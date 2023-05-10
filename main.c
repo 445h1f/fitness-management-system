@@ -160,10 +160,17 @@ void insert_record()
             scanf(" %[^\n]s", city);
             strcpy(c.city, city);
 
+            int recommended;
+            if (c.bmi > 25 || c.bmi < 18){
+                recommended = 2;
+            } else {
+                recommended = 1;
+            }
+
             pack_details();
             while (1)
             {
-                printf("\n>>> Select Package: ");
+                printf("\n>>> Select Package (Recommended Package: %d): ", recommended);
                 scanf("%d", &temp_package);
 
                 if (temp_package == 1 || temp_package == 2)
@@ -275,8 +282,9 @@ void search_record()
         if (temp_registration == c.registration_number)
         {
             printf("\n \t\t\t......Search record found.......\n\n");
-            printf("\n \t Registration Number: %d", c.registration_number);
+            printf("\n \t Registration Number:  %d", c.registration_number);
             printf("\n \t\t\t Name: %s", c.name);
+            printf("\n \t\t\t BMI:  %f", c.bmi);
             printf("\n \t\t Phone Number: %0.Lf", c.phone_number);
             printf("\n\t\t\t City: %s", c.city);
             printf("\n\t\t Slot Timings: ");
@@ -313,33 +321,35 @@ void display_record()
         printf("\n\t\t\t\t......No Records to Display..........");
     }
     else{
-        for (int i=0; i<120; i++){
+        for (int i=0; i<96; i++){
             printf("_");
         }
         printf("\n");
-        printf("\nNumber \t\t    Name \t\tPhone Number \t\t   City \t\t\t    Slot\n");
+        printf("\nNumber \t    Name \t  BMI  \t\tPhone Number \t   City \t    Slot \tPackage\n");
 
         while (fread(&c, sizeof(customer), 1, fp))
         {
             // printf("\n%d \t\t %s \t\t %0.Lf \t\t %s \t\t %d", c.registration_number, c.name, c.phone_number, c.city, c.package);
-            for (int i=0; i<120; i++){
+            for (int i=0; i<96; i++){
                 printf("_");
             }
             printf("\n");
             printf("\n%d", c.registration_number);
-            printf("\t\t%s", c.name);
-            printf("\t\t%0.lf", c.phone_number);
-            printf("\t\t%s\t\t", c.city);
+            printf("\t%s", c.name);
+            printf("\t%f", c.bmi);
+            printf("\t%0.lf", c.phone_number);
+            printf("\t%s\t  ", c.city);
             if(c.slot==1)
-                printf("\t06AM-07AM\n");
+                printf("06AM-07AM");
             else if(c.slot==2)
-                printf("\t07AM-08AM\n");
+                printf("07AM-08AM");
             else if (c.slot == 3)
-                printf("\t04PM-05PM\n");
+                printf("04PM-05PM");
             else if (c.slot == 4)
-                printf("\t05PM-06PM\n");
+                printf("05PM-06PM");
+            printf("\t  %d\n", c.package);
         }
-        for (int i=0; i<120; i++){
+        for (int i=0; i<96; i++){
             printf("_");
         }
     }
